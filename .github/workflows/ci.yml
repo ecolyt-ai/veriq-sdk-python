@@ -30,4 +30,7 @@ jobs:
       - name: Install wheel and smoke-test imports
         run: |
           python -m pip install dist/*.whl
-          python -c "from veriq import VeriqClient, __version__; print('veriq-sdk', __version__)"
+          # Run outside the checkout so Python imports the installed wheel, not ./veriq.
+          cd "$RUNNER_TEMP"
+          python -c "import veriq, sys; assert 'site-packages' in veriq.__file__, veriq.__file__; print('veriq-sdk', veriq.__version__, 'on', sys.version.split()[0])"
+          python -c "from veriq import VeriqClient; from veriq.langchain import VeriqSearchResults; print('imports OK')"

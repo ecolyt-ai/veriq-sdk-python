@@ -9,7 +9,7 @@ import random
 import time
 from collections.abc import Mapping
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any, Literal
 from urllib.parse import quote
@@ -967,8 +967,8 @@ class VeriqClient:
             except (TypeError, ValueError, OverflowError):
                 return None
             if retry_at.tzinfo is None:
-                retry_at = retry_at.replace(tzinfo=UTC)
-            return max(0.0, retry_at.timestamp() - datetime.now(UTC).timestamp())
+                retry_at = retry_at.replace(tzinfo=timezone.utc)
+            return max(0.0, retry_at.timestamp() - datetime.now(timezone.utc).timestamp())
         return seconds if seconds >= 0 else None
 
     @staticmethod

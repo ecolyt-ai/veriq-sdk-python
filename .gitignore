@@ -1,0 +1,8 @@
+# SDK-local ignore file. Hatch ships the nearest .gitignore inside the sdist, so keeping one
+# here prevents the monorepo root .gitignore (internal paths) from being published.
+__pycache__/
+*.py[cod]
+dist/
+build/
+*.egg-info/
+.venv/
